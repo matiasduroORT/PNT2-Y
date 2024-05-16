@@ -3,7 +3,7 @@
     <div class="nav-container">
       <a class="navbar-brand" href="#">PNT2</a>
       <ul class="nav-list">
-        <li class="nav-item">
+        <li class="nav-item" v-if="isAuthenticated">
           <router-link class="nav-link" to="/home">Home</router-link>
         </li>
         <li class="nav-item" v-if="isAuthenticated">
@@ -21,22 +21,28 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'; 
-import { computed } from 'vue';
+
+import { useAuthStore } from '../stores/authStore';
+
 
 export default {
-  setup(){
-    const router = useRouter();
-    const isAuthenticated = computed(() => localStorage.getItem('isAuthenticated') === 'true')
-    
-    function logout(){
-      localStorage.removeItem('isAuthenticated');
-      router.push({name:'Home'})
-    }
-    return {
-      isAuthenticated, logout
+  computed: {
+    isAuthenticated(){
+      const authStore = useAuthStore();
+      return authStore.isAuthenticated
     }
   },
+  methods:{
+    logout(){
+      const authStore = useAuthStore();
+      authStore.logout();
+      this.$router.push({ name: 'Login'})
+    }
+  },
+  mounted(){
+    const authStore = useAuthStore();
+    authStore.checkAuth();
+  }
 }
 </script>
 

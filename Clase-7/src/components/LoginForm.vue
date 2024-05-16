@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { useAuthStore } from '@/stores/authStore';
 
 export default {
   data(){
@@ -21,12 +21,18 @@ export default {
   },
   methods:{
     login(){
-      if(this.username ==="admin" && this.password === "admin"){
-        localStorage.setItem('isAuthenticated', 'true');
-        this.$router.push({ name: 'Perfil'})
-      }else{
-        alert('Usuario no válido')
-      } 
+      const authStore = useAuthStore();
+      authStore.login(this.username, this.password);
+      if (authStore.isAuthenticated){
+        this.$router.push({ name: 'Home'})
+      }
+    }
+  },
+  mounted(){
+    const authStore = useAuthStore();
+    authStore.checkAuth();
+    if( authStore.isAuthenticated ){
+      this.$router.push({ name: 'Home' })
     }
   }
 }
