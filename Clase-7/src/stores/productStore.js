@@ -22,23 +22,23 @@ export const useProductStore = defineStore('productStore', {
             } catch (error) {
                 console.error('Fallo el fetch ', error)
             }
-        }
-    },
-    agregarAlCarrito(producto){
-        const productoEnCarrito = this.cart.find( item => item.id === producto.id);
-        if(!productoEnCarrito) {
-            this.cart.push({ ...producto, quantity: 1})
-        } else {
-            productoEnCarrito.quantity += 1;
-        }
-    },
-    removerDelCarrito(producto){
-        const productoEnCarrito = this.cart.find(item => item.id === producto.id)
-        if(productoEnCarrito) {
-            if(productoEnCarrito.quantity > 1){
-                productoEnCarrito.quantity -= 1;
+        },
+        agregarAlCarrito(producto){
+            const productoEnCarrito = this.cart.find( item => item.id === producto.id);
+            if(!productoEnCarrito) {
+                this.cart.push({ ...producto, quantity: 1})
             } else {
-                this.cart = this.cart.filter(item => item.id !== producto.id)
+                productoEnCarrito.quantity += 1;
+            }
+        },
+        removerDelCarrito(producto){
+            const productoEnCarrito = this.cart.find(item => item.id === producto.id)
+            if(productoEnCarrito) {
+                if(productoEnCarrito.quantity > 1){
+                    productoEnCarrito.quantity -= 1;
+                } else {
+                    this.cart = this.cart.filter(item => item.id !== producto.id)
+                }
             }
         }
     }
