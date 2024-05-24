@@ -17,16 +17,18 @@ export default {
     },
     data(){
         return {
-            productos: []
+            productStore: useProductStore()
+        }
+    },
+    computed: {
+        productos(){
+            return this.productStore.productos
         }
     },
     methods: {
         // Llamar Productos
         fetchProductos(){
-            const productStore = useProductStore();
-            productStore.fetchProductos().then(() => {
-                this.productos = productStore.productos
-            })
+            this.productStore.fetchProductos()
         }
     },
     mounted(){

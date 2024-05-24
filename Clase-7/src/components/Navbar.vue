@@ -7,13 +7,22 @@
           <router-link class="nav-link" to="/home">Home</router-link>
         </li>
         <li class="nav-item" v-if="isAuthenticated">
+          <router-link class="nav-link" to="/carrito">Carrito</router-link>
+        </li>
+        <li class="nav-item" v-if="isAuthenticated">
           <router-link class="nav-link" to="/perfil">Perfil</router-link>
+        </li>
+        <li class="nav-item" v-if="isAdmin">
+          <router-link class="nav-link" to="/crear-producto">Crear Producto</router-link>
         </li>
         <li class="nav-item" v-if="isAuthenticated">
           <button @click="logout" class="nav-link logout-button">Logout</button>
         </li>
         <li class="nav-item" v-else>
           <router-link class="nav-link" to="/login">Login</router-link>
+        </li>
+        <li class="nav-item" v-if="isAuthenticated">
+          <span>Productos en Carrito: {{ cantidadCarrito }}</span>
         </li>
       </ul>
     </div>  
@@ -22,6 +31,7 @@
 
 <script>
 
+import { useProductStore } from '@/stores/productStore';
 import { useAuthStore } from '../stores/authStore';
 
 
@@ -30,6 +40,14 @@ export default {
     isAuthenticated(){
       const authStore = useAuthStore();
       return authStore.isAuthenticated
+    },
+    isAdmin(){
+      const authStore = useAuthStore();
+      return authStore.isAdmin;
+    },
+    cantidadCarrito(){
+      const productStore = useProductStore();
+      return productStore.cantidadCarrito;
     }
   },
   methods:{

@@ -20,9 +20,9 @@ export default {
     }
   },
   methods:{
-    login(){
+    async login(){
       const authStore = useAuthStore();
-      authStore.login(this.username, this.password);
+      await authStore.login(this.username, this.password);
       if (authStore.isAuthenticated){
         this.$router.push({ name: 'Home'})
       }

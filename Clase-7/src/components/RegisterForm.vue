@@ -1,7 +1,7 @@
 <template>
     <div class="register-form-container">
         <h1>Registro</h1>
-        <form @click="register" class="register-form">
+        <form  @submit.prevent="register" class="register-form">
             <input v-model="username" type="text" placeholder="Username" class="register-input"/>
             <input v-model="email" type="email" placeholder="Email" class="register-input"/>
             <input v-model="password" type="password" placeholder="Password" class="register-input"/>
@@ -22,9 +22,9 @@ export default {
         }
     },
     methods:{
-        register() {
+        async register() {
             const authStore = useAuthStore();
-            authStore.register(this.username, this.email, this.password);
+            await authStore.register(this.username, this.email, this.password);
             if (authStore.isAuthenticated){
                 this.$router.push({ name: 'Home'})
             }

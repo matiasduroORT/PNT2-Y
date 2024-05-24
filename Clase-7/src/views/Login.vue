@@ -27,15 +27,19 @@ export default {
     methods:{
         cambiarForm(){
             this.currentForm = this.currentForm === 'LoginForm' ? 'RegisterForm' : 'LoginForm'
-        } 
+        },
+        checkAuthorization(){
+          const authStore = useAuthStore();
+          authStore.checkAuth();
+          if(authStore.isAuthenticated){
+            this.$router.push({ name: 'Home'})
+          }
+        }
     },
     mounted(){
-       const authStore = useAuthStore();
-       authStore.checkAuth();
-       if(authStore.isAuthenticated){
-         this.$router.push({ name: 'Home'})
-       }
+      this.checkAuthorization();
     }
+
 }
 </script>
 

@@ -3,6 +3,9 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Perfil from '../views/Perfil.vue'
 import NotFound from '../views/NotFound.vue'
+import Carrito from '@/views/Carrito.vue';
+import CrearProducto from '@/views/CrearProducto.vue';
+
 
 const routes = [
     {
@@ -29,6 +32,22 @@ const routes = [
         path: '/perfil',
         name: 'Perfil',
         component: Perfil,
+        meta: {
+            requiereAuth: true
+        }
+    },
+    {
+        path: '/carrito',
+        name: 'Carrito',
+        component: Carrito,
+        meta:{
+            requiereAuth: true
+        }
+    },
+    {
+        path: '/crear-producto',
+        name: 'CrearProducto',
+        component: CrearProducto,
         meta: {
             requiereAuth: true
         }
